@@ -1,5 +1,5 @@
-# jena-fuseki
-Jena Fuseki docker image and helm chart
+# Apache Jena Fuseki
+Apache Jena Fuseki docker image and helm chart.
 
 # Collaboration guidelines
 HIRO uses and requires from its partners [GitFlow with Forks](https://hirodevops.notion.site/GitFlow-with-Forks-3b737784e4fc40eaa007f04aed49bb2e?pvs=4)

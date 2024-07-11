@@ -1,0 +1,84 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+    paths-ignore:
+      - 'releases/**'
+  pull_request:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  DOCKER_IMAGE_NAME: hiro-microdatacenters-bv/jena-fuseki
+
+jobs:
+  build:
+    permissions:
+      contents: write
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Make versions
+        run: |
+          chmod +x ./tools/version.sh
+          ./tools/version.sh "${{ github.sha }}" "${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}"
+          echo "APP_VERSION=$(cat "./VERSION")" >> $GITHUB_ENV
+          echo "DOCKER_IMAGES=$(cat "./DOCKER_IMAGES")" >> $GITHUB_ENV
+          echo "DOCKER_TAGS=$(cat "./VERSION_DOCKER")" >> $GITHUB_ENV
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}
+          tags: ${{ env.DOCKER_TAGS }}
+
+      - name: Build and push docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ${{ env.DOCKER_IMAGES }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Create a github release
+        run: gh release create "${{ env.APP_VERSION }}" ./openapi.yaml
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Publish Helm charts
+        uses: stefanprodan/helm-gh-pages@master
+        with:
+          token: ${{ github.token }}
+          target_dir: "./helm-charts/"
