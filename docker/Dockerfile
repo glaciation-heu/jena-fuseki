@@ -13,10 +13,14 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
+#   Changes made by Vladimir Gladkii (HIRO-MicroDataCenters) on 11/07/2024:
+#   - Removed MAINTAINER as DEPRECATED.
+#   - Chnaged version and sha512 from 4.x.x to 5.0.0.
+#   - Added args fuseki_sha512 and fuseki_version.
+#   - Removed test the install by testing it's ping resource.
 
 
 FROM eclipse-temurin:17-jre-alpine
-MAINTAINER Stian Soiland-Reyes <stain@apache.org>
 
 ENV LANG C.UTF-8
 RUN set -eux; \
@@ -25,15 +29,16 @@ RUN set -eux; \
     rm -rf /var/cache/apk/*
 
 
-# Update below according to https://jena.apache.org/download/ 
-# and checksum for apache-jena-fuseki-4.x.x.tar.gz.sha512
-ENV FUSEKI_SHA512 78074d87d4c022ef7e89b8394d2b14ead447a9201d52795d8c9adab0e03341cffc883abb849dab340bbecfc18654e1d126a47d8936241e8e2f036b0d66294c7d
-ENV FUSEKI_VERSION 4.8.0
+ARG fuseki_sha512=c7b9fa452cdec19c50ee08ee191012b26c7b51f1ee5c5143db3047e0545c007599fbc08481fa61df5aef766a796e43262c209fc42578f2e532c0ab0c19dcbc51
+ARG fuseki_version=5.0.0
+
+ENV FUSEKI_SHA512 $fuseki_sha512
+ENV FUSEKI_VERSION $fuseki_version
 ENV ASF_MIRROR https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=
 ENV ASF_ARCHIVE https://archive.apache.org/dist/
 
-LABEL org.opencontainers.image.url https://github.com/stain/jena-docker/tree/master/jena-fuseki
-LABEL org.opencontainers.image.source https://github.com/stain/jena-docker/
+LABEL org.opencontainers.image.url https://github.com/HIRO-MicroDataCenters-BV/jena-fuseki/tree/master/docker
+LABEL org.opencontainers.image.source https://github.com/HIRO-MicroDataCenters-BV/jena-fuseki/
 LABEL org.opencontainers.image.documentation https://jena.apache.org/documentation/fuseki2/
 LABEL org.opencontainers.image.title "Apache Jena Fuseki"
 LABEL org.opencontainers.image.description "Fuseki is a SPARQL 1.1 server with a web interface, backed by the Apache Jena TDB RDF triple store."
@@ -60,13 +65,6 @@ RUN     (curl --location --silent --show-error --fail --retry-connrefused --retr
     rm fuseki.tar.gz* && \
     cd $FUSEKI_HOME && rm -rf fuseki.war && chmod 755 fuseki-server
 
-# Test the install by testing it's ping resource. 20s sleep because Docker Hub.
-RUN  $FUSEKI_HOME/fuseki-server & \
-    sleep 20 && \
-    curl -sS --fail 'http://localhost:3030/$/ping' 
-
-# No need to kill Fuseki as our shell will exit after curl
-
 # As "localhost" is often inaccessible within Docker container,
 # we'll enable basic-auth with a random admin password
 # (which we'll generate on start-up)
@@ -79,7 +77,7 @@ COPY load.sh $FUSEKI_HOME/
 COPY tdbloader $FUSEKI_HOME/
 COPY tdbloader2 $FUSEKI_HOME/
 RUN chmod 755 $FUSEKI_HOME/load.sh $FUSEKI_HOME/tdbloader $FUSEKI_HOME/tdbloader2
-#VOLUME /staging
+# VOLUME /staging
 
 # Create a fuseki user and group
 RUN addgroup -S fuseki && \
