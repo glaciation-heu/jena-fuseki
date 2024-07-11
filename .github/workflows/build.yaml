@@ -74,7 +74,7 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Create a github release
-        run: gh release create "${{ env.APP_VERSION }}" ./openapi.yaml
+        run: gh release create "${{ env.APP_VERSION }}"
         env:
           GH_TOKEN: ${{ github.token }}
 
