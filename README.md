@@ -45,7 +45,7 @@ Steps:
 
 1. Start Minikube:
 ```bash
-minikube start --cpus 4 --memory 8192
+minikube start
 ```
 
 2. Build a docker image
@@ -97,7 +97,7 @@ Create the branch [gh-pages](https://pages.github.com/) and use it as a GitHub p
 - The index.yaml file containing the list of Helm Charts will be available at `https://hiro-microdatacenters-bv.github.io/jena-fuseki/helm-charts/index.yaml`.
 - The Docker image will be available at `https://github.com/HIRO-MicroDataCenters-BV/jena-fuseki/pkgs/container/jena-fuseki`.
 
-# Collaboration guidelines
+## Collaboration guidelines
 HIRO uses and requires from its partners [GitFlow with Forks](https://hirodevops.notion.site/GitFlow-with-Forks-3b737784e4fc40eaa007f04aed49bb2e?pvs=4)
 
 ## License
