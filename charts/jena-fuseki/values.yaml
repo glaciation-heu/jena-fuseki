@@ -1,0 +1,72 @@
+replicaCount: 1
+
+image:
+  repository: ""
+  tag: ""
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext:
+  runAsUser: 1010
+  fsGroup: 1010
+
+service:
+  type: ClusterIP
+  port: 3030
+
+ingress:
+  enabled: false
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+
+persistence:
+  enabled: true
+  claimName: "jena-fuseki"
+  accessMode: ReadWriteOnce
+  size: 3Gi
+
+volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: "jena-fuseki"
+
+volumeMounts:
+  - name: data
+    mountPath: "/fuseki"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
