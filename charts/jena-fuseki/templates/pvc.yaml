@@ -5,8 +5,10 @@ metadata:
   name: {{ .Values.persistence.claimName }}
   labels:
     {{- include "jena-fuseki.labels" . | nindent 4 }}
+  {{- with .Values.persistence.annotations }}
   annotations:
-    "helm.sh/resource-policy": keep
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   accessModes:
     - {{ .Values.persistence.accessMode | quote }}

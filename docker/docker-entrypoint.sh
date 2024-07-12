@@ -71,7 +71,7 @@ do
          -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8'\
          --data "dbName=${dataset}&dbType=${TDB_VERSION}"
 done
-echo "Fuseki is available :-)"
+echo "Fuseki is running"
 unset ADMIN_PASSWORD # Don't keep it in memory
 
 # rejoin our exec
