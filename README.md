@@ -10,7 +10,7 @@ Steps:
 
 1. Add a repository
 ```bash
-helm repo add jena-fuseki-repo https://hiro-microdatacenters-bv.github.io/jena-fuseki/helm-charts/
+helm repo add jena-fuseki-repo https://glaciation-heu.github.io/jena-fuseki/helm-charts/
 helm repo update
 helm search repo jena-fuseki
 ```
@@ -94,8 +94,8 @@ The Helm chart version changed automatically when a new release is created. The 
 Create the branch [gh-pages](https://pages.github.com/) and use it as a GitHub page.  
 
 **After execution**    
-- The index.yaml file containing the list of Helm Charts will be available at `https://hiro-microdatacenters-bv.github.io/jena-fuseki/helm-charts/index.yaml`.
-- The Docker image will be available at `https://github.com/HIRO-MicroDataCenters-BV/jena-fuseki/pkgs/container/jena-fuseki`.
+- The index.yaml file containing the list of Helm Charts will be available at `https://glaciation-heu.github.io/jena-fuseki/helm-charts/index.yaml`.
+- The Docker image will be available at `https://github.com/glaciation-heu/jena-fuseki/pkgs/container/jena-fuseki`.
 
 ## Collaboration guidelines
 HIRO uses and requires from its partners [GitFlow with Forks](https://hirodevops.notion.site/GitFlow-with-Forks-3b737784e4fc40eaa007f04aed49bb2e?pvs=4)

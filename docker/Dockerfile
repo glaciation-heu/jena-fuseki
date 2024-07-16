@@ -37,8 +37,8 @@ ENV FUSEKI_VERSION $fuseki_version
 ENV ASF_MIRROR https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=
 ENV ASF_ARCHIVE https://archive.apache.org/dist/
 
-LABEL org.opencontainers.image.url https://github.com/HIRO-MicroDataCenters-BV/jena-fuseki/tree/master/docker
-LABEL org.opencontainers.image.source https://github.com/HIRO-MicroDataCenters-BV/jena-fuseki/
+LABEL org.opencontainers.image.url https://github.com/glaciation-heu/jena-fuseki/tree/master/docker
+LABEL org.opencontainers.image.source https://github.com/glaciation-heu/jena-fuseki/
 LABEL org.opencontainers.image.documentation https://jena.apache.org/documentation/fuseki2/
 LABEL org.opencontainers.image.title "Apache Jena Fuseki"
 LABEL org.opencontainers.image.description "Fuseki is a SPARQL 1.1 server with a web interface, backed by the Apache Jena TDB RDF triple store."
