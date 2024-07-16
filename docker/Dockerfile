@@ -18,6 +18,7 @@
 #   - Chnaged version and sha512 from 4.x.x to 5.0.0.
 #   - Added args fuseki_sha512 and fuseki_version.
 #   - Removed test the install by testing it's ping resource.
+#   - Removed the group and user "fuseki".
 
 
 FROM eclipse-temurin:17-jre-alpine
@@ -77,24 +78,16 @@ COPY load.sh $FUSEKI_HOME/
 COPY tdbloader $FUSEKI_HOME/
 COPY tdbloader2 $FUSEKI_HOME/
 RUN chmod 755 $FUSEKI_HOME/load.sh $FUSEKI_HOME/tdbloader $FUSEKI_HOME/tdbloader2
-# VOLUME /staging
-
-# Create a fuseki user and group
-RUN addgroup -S fuseki && \
-    adduser -G fuseki -S -D -H fuseki
 
 # Where we start our server from
 WORKDIR $FUSEKI_HOME
-RUN chown -R fuseki:fuseki $FUSEKI_HOME
 
 # Make sure we start with empty /fuseki
 RUN mkdir -p $FUSEKI_BASE; \
-    rm -rf $FUSEKI_BASE/*; \
-    chown -R fuseki:fuseki $FUSEKI_BASE
+    rm -rf $FUSEKI_BASE/*;
 VOLUME $FUSEKI_BASE
 
 EXPOSE 3030
-USER fuseki
 
 ENTRYPOINT ["/sbin/tini", "--", "sh", "/docker-entrypoint.sh"]
 CMD ["/jena-fuseki/fuseki-server"]
