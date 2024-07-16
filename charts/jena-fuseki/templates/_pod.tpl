@@ -23,6 +23,12 @@ spec:
         {{- toYaml .Values.securityContext | nindent 12 }}
       image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
       imagePullPolicy: {{ .Values.image.pullPolicy }}
+      env:
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "jena-fuseki.fullname" . }}
+              key: password
       ports:
         - name: http
           containerPort: {{ .Values.service.port }}
