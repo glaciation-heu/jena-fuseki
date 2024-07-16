@@ -16,6 +16,7 @@ fullnameOverride: ""
 
 serviceAccount:
   create: true
+  automount: true
   annotations: {}
   name: ""
 
@@ -30,8 +31,7 @@ service:
   type: ClusterIP
   port: 3030
 
-ingress:
-  enabled: false
+ingressHostName: jena-fuseki
 
 resources: {}
   # limits:
@@ -42,13 +42,23 @@ resources: {}
   #   memory: 128Mi
 
 livenessProbe:
+  failureThreshold: 3
   httpGet:
     path: /
-    port: http
+    port: 3030
+    scheme: HTTP
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  timeoutSeconds: 5
+
 readinessProbe:
   httpGet:
     path: /
-    port: http
+    port: 3030
+    scheme: HTTP
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  timeoutSeconds: 5
 
 autoscaling:
   enabled: false
