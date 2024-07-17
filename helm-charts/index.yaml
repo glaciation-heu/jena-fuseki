@@ -12,6 +12,16 @@ entries:
     - https://glaciation-heu.github.io/jena-fuseki/helm-charts/jena-fuseki-1.0.4.tgz
     version: 1.0.4
   - apiVersion: v2
+    appVersion: 1.0.4-dev.1.disable-auth.e522f888
+    created: "2024-07-17T11:01:23.294958059Z"
+    description: Apache Jena Fuseki
+    digest: 4c21f3b0c7d16edf4bdc9d0c8c1b5ab1a962dc3a14959d9e90184fe9869965e9
+    name: jena-fuseki
+    type: application
+    urls:
+    - https://glaciation-heu.github.io/jena-fuseki/helm-charts/jena-fuseki-1.0.4-dev.1.disable-auth.e522f888.tgz
+    version: 1.0.4-dev.1.disable-auth.e522f888
+  - apiVersion: v2
     appVersion: 1.0.3
     created: "2024-07-16T12:49:31.365782952Z"
     description: Apache Jena Fuseki
@@ -91,4 +101,4 @@ entries:
     urls:
     - https://glaciation-heu.github.io/jena-fuseki/helm-charts/jena-fuseki-1.0.0-dev.1.main.ffb6b7d5.tgz
     version: 1.0.0-dev.1.main.ffb6b7d5
-generated: "2024-07-16T13:16:10.611159021Z"
+generated: "2024-07-17T11:01:23.294392336Z"
