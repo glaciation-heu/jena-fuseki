@@ -50,45 +50,22 @@ LABEL org.opencontainers.image.authors "Apache Jena Fuseki by https://jena.apach
 # Config and data
 ENV FUSEKI_BASE /fuseki
 
-
 # Installation folder
 ENV FUSEKI_HOME /jena-fuseki
 
 WORKDIR /tmp
-# published sha512 checksum
-RUN echo "$FUSEKI_SHA512  fuseki.tar.gz" > fuseki.tar.gz.sha512
-# Download/check/unpack/move in one go (to reduce image size)
-RUN     (curl --location --silent --show-error --fail --retry-connrefused --retry 3 --output fuseki.tar.gz ${ASF_MIRROR}jena/binaries/apache-jena-fuseki-$FUSEKI_VERSION.tar.gz || \
-    curl --fail --silent --show-error --retry-connrefused --retry 3 --output fuseki.tar.gz $ASF_ARCHIVE/jena/binaries/apache-jena-fuseki-$FUSEKI_VERSION.tar.gz) && \
+RUN echo "$FUSEKI_SHA512  fuseki.tar.gz" > fuseki.tar.gz.sha512; \
+    (\
+        curl --location --silent --show-error --fail --retry-connrefused --retry 3 --output fuseki.tar.gz ${ASF_MIRROR}jena/binaries/apache-jena-fuseki-$FUSEKI_VERSION.tar.gz || \
+        curl --fail --silent --show-error --retry-connrefused --retry 3 --output fuseki.tar.gz $ASF_ARCHIVE/jena/binaries/apache-jena-fuseki-$FUSEKI_VERSION.tar.gz \
+    ) && \
     sha512sum -c fuseki.tar.gz.sha512 && \
     tar zxf fuseki.tar.gz && \
     mv apache-jena-fuseki* $FUSEKI_HOME && \
     rm fuseki.tar.gz* && \
     cd $FUSEKI_HOME && rm -rf fuseki.war && chmod 755 fuseki-server
-
-# As "localhost" is often inaccessible within Docker container,
-# we'll enable basic-auth with a random admin password
-# (which we'll generate on start-up)
-COPY shiro.ini $FUSEKI_HOME/shiro.ini
-COPY docker-entrypoint.sh /
-RUN chmod 755 /docker-entrypoint.sh
-
-
-COPY load.sh $FUSEKI_HOME/
-COPY tdbloader $FUSEKI_HOME/
-COPY tdbloader2 $FUSEKI_HOME/
-RUN chmod 755 $FUSEKI_HOME/load.sh $FUSEKI_HOME/tdbloader $FUSEKI_HOME/tdbloader2
-
-# Where we start our server from
+COPY shiro.ini $FUSEKI_BASE/shiro.ini
 WORKDIR $FUSEKI_HOME
-
-# Make sure we start with empty /fuseki
-RUN mkdir -p $FUSEKI_BASE; \
-    rm -rf $FUSEKI_BASE/*;
 VOLUME $FUSEKI_BASE
-
 EXPOSE 3030
-
-ENTRYPOINT ["/sbin/tini", "--", "sh", "/docker-entrypoint.sh"]
-CMD ["/jena-fuseki/fuseki-server"]
-
+ENTRYPOINT ["/sbin/tini", "--", "/jena-fuseki/fuseki-server"]
