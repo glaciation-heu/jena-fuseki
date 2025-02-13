@@ -19,6 +19,9 @@
 #   - Added args fuseki_sha512 and fuseki_version.
 #   - Removed test the install by testing it's ping resource.
 #   - Removed the group and user "fuseki".
+#
+#   Changes made by Péter Forgács (Lakeside Labs) on 13/02/2025:
+#   - Chnaged version and sha512 from 5.0.0 to 5.3.0.
 
 
 FROM eclipse-temurin:17-jre-alpine
@@ -30,8 +33,8 @@ RUN set -eux; \
     rm -rf /var/cache/apk/*
 
 
-ARG fuseki_sha512=c7b9fa452cdec19c50ee08ee191012b26c7b51f1ee5c5143db3047e0545c007599fbc08481fa61df5aef766a796e43262c209fc42578f2e532c0ab0c19dcbc51
-ARG fuseki_version=5.0.0
+ARG fuseki_sha512=5204eefefb921ec029346139f5cb768fe298c816c8642ab590c9bdcee4f24cfacfb15c4266f7acf020d0d5232eea909e4af876f1d5162231ea4b8f8fe0feb3cf
+ARG fuseki_version=5.3.0
 
 ENV FUSEKI_SHA512 $fuseki_sha512
 ENV FUSEKI_VERSION $fuseki_version
