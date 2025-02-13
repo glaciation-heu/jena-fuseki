@@ -11,7 +11,7 @@ To build an image, execute:
 
     docker build -t jena-fuseki .
 
-You can use args fuseki_sha512 and fuseki_version to change version of Apache Jena Fuseki. The version is 5.0.0 by default.
+You can use args fuseki_sha512 and fuseki_version to change version of Apache Jena Fuseki. The version is 5.3.0 by default.
 
     docker build --build-arg fuseki_sha512=78074d87d4c022ef7e89b8394d2b14ead447a9201d52795d8c9adab0e03341cffc883abb849dab340bbecfc18654e1d126a47d8936241e8e2f036b0d66294c7d --build-arg fuseki_version=4.8.0 -t jena-fuseki:4.8.0 .
 
