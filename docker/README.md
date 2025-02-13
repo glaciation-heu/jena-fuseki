@@ -40,4 +40,3 @@ You can override the admin-password using the form
 
 ## License
 [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
-
