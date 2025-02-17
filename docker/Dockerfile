@@ -73,12 +73,8 @@ RUN echo "$FUSEKI_SHA512  fuseki.tar.gz" > fuseki.tar.gz.sha512; \
     cd $FUSEKI_HOME && rm -rf fuseki.war && chmod 755 fuseki-server
 COPY shiro.ini $FUSEKI_HOME/shiro.ini
 
-# Default place for shiro.ini is in a volume. We make teh server serach for it in a folder built into image.
-# RUN sed -i -e 's/shiro\.ini/file\:\/jena-fuseki\/shiro\.ini/g' /jena-fuseki/webapp/WEB-INF/web.xml
-
 # Make sure to have a dataset named "slice"
-COPY slice.ttl $FUSEKI_BASE/configuration/slice.ttl
-RUN mkdir -p $FUSEKI_BASE/databases/slice
+COPY slice.ttl /tmp/slice.ttl
 
 WORKDIR $FUSEKI_HOME
 VOLUME $FUSEKI_BASE
