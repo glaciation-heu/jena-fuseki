@@ -72,7 +72,6 @@ RUN echo "$FUSEKI_SHA512  fuseki.tar.gz" > fuseki.tar.gz.sha512; \
     rm fuseki.tar.gz* && \
     cd $FUSEKI_HOME && rm -rf fuseki.war && chmod 755 fuseki-server
 COPY shiro.ini $FUSEKI_HOME/shiro.ini
-COPY shiro.ini $FUSEKI_BASE/shiro.ini
 
 # Default place for shiro.ini is in a volume. We make teh server serach for it in a folder built into image.
 # RUN sed -i -e 's/shiro\.ini/file\:\/jena-fuseki\/shiro\.ini/g' /jena-fuseki/webapp/WEB-INF/web.xml
@@ -84,4 +83,7 @@ RUN mkdir -p $FUSEKI_BASE/databases/slice
 WORKDIR $FUSEKI_HOME
 VOLUME $FUSEKI_BASE
 EXPOSE 3030
-ENTRYPOINT ["/sbin/tini", "--", "/jena-fuseki/fuseki-server"]
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
