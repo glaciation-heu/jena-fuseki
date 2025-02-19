@@ -23,7 +23,7 @@ echo "JVM_ARGS: $JVM_ARGS"
 # Function to start Fuseki
 start_fuseki() {
     echo "Starting Jena Fuseki..."
-    /sbin/tini -- /jena-fuseki/fuseki-server &
+    /jena-fuseki/fuseki-server &
     FUSEKI_PID=$!
 }
 
