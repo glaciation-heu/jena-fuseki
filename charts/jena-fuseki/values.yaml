@@ -48,8 +48,8 @@ livenessProbe:
     port: 3030
     scheme: HTTP
   initialDelaySeconds: 15
-  periodSeconds: 10
-  timeoutSeconds: 5
+  periodSeconds: 20
+  timeoutSeconds: 10
 
 readinessProbe:
   httpGet:
@@ -57,8 +57,8 @@ readinessProbe:
     port: 3030
     scheme: HTTP
   initialDelaySeconds: 15
-  periodSeconds: 10
-  timeoutSeconds: 5
+  periodSeconds: 20
+  timeoutSeconds: 10
 
 autoscaling:
   enabled: false
