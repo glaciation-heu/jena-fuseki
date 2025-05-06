@@ -26,6 +26,9 @@
 #   - Added dataset "slice" initialization by default.
 #   - Modified the syntax for ENV and LABEL.
 #   - Resolved authentication issues.
+#
+#   Changes made by Péter Forgács (Lakeside Labs) on 06/05/2025:
+#   - Changed version and sha512 from 5.3.0 to 5.4.0.
 
 
 FROM eclipse-temurin:21-jre-alpine
@@ -37,8 +40,8 @@ RUN set -eux; \
     rm -rf /var/cache/apk/*
 
 
-ARG fuseki_sha512=5204eefefb921ec029346139f5cb768fe298c816c8642ab590c9bdcee4f24cfacfb15c4266f7acf020d0d5232eea909e4af876f1d5162231ea4b8f8fe0feb3cf
-ARG fuseki_version=5.3.0
+ARG fuseki_sha512=41a161d058e3f5ee96f2f4e49494cb4b1ca7413d575465f90e312e2a2711adc2e4bb91dcc6fb6f7006ff5d7c095beb4bb84fab3f055520d51b6d71ef975d601f
+ARG fuseki_version=5.4.0
 
 ENV FUSEKI_SHA512=$fuseki_sha512
 ENV FUSEKI_VERSION=$fuseki_version
