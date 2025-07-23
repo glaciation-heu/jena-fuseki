@@ -29,6 +29,9 @@
 #
 #   Changes made by Péter Forgács (Lakeside Labs) on 06/05/2025:
 #   - Changed version and sha512 from 5.3.0 to 5.4.0.
+#
+#   Changes made by Péter Forgács (Lakeside Labs) on 23/07/2025:
+#   - Changed version and sha512 from 5.4.0 to 5.5.0.
 
 
 FROM eclipse-temurin:21-jre-alpine
@@ -40,8 +43,8 @@ RUN set -eux; \
     rm -rf /var/cache/apk/*
 
 
-ARG fuseki_sha512=41a161d058e3f5ee96f2f4e49494cb4b1ca7413d575465f90e312e2a2711adc2e4bb91dcc6fb6f7006ff5d7c095beb4bb84fab3f055520d51b6d71ef975d601f
-ARG fuseki_version=5.4.0
+ARG fuseki_sha512=bfbf59eac731b71bcf8e148f2abeda9b4adca215639eef3bba61243b308572b23a9a70a43c1483247f9894bfb23d69b59e0e64e1da47cb3cfc592aa979084d5c
+ARG fuseki_version=5.5.0
 
 ENV FUSEKI_SHA512=$fuseki_sha512
 ENV FUSEKI_VERSION=$fuseki_version
