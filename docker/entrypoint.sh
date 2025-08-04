@@ -25,7 +25,7 @@ echo "JVM_ARGS: $JVM_ARGS"
 # Function to start Fuseki
 start_fuseki() {
     echo "Starting Jena Fuseki..."
-    /jena-fuseki/fuseki-server
+    /jena-fuseki/fuseki-server &
     FUSEKI_PID=$!
 }
 
@@ -48,16 +48,16 @@ cleanup_old_data() {
 start_fuseki
 
 # Periodically restart Fuseki
-# while true; do
-#     sleep 2100  # Restart every 35 minutes (adjust as needed)
+while true; do
+    sleep 2100  # Restart every 35 minutes (adjust as needed)
     
-#     echo "Stopping Jena Fuseki..."
-#     kill $FUSEKI_PID
-#     wait $FUSEKI_PID  # Ensure the process has fully stopped
+    echo "Stopping Jena Fuseki..."
+    kill $FUSEKI_PID
+    wait $FUSEKI_PID  # Ensure the process has fully stopped
 
-#     echo "Cleaning up old $SLICE_DIR/Data-* foders..."
-#     cleanup_old_data "$SLICE_DIR"
+    echo "Cleaning up old $SLICE_DIR/Data-* foders..."
+    cleanup_old_data "$SLICE_DIR"
     
-#     echo "Restarting Jena Fuseki..."
-#     start_fuseki
-# done
+    echo "Restarting Jena Fuseki..."
+    start_fuseki
+done
