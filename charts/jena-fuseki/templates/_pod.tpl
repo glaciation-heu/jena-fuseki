@@ -15,6 +15,7 @@ spec:
     {{- toYaml . | nindent 8 }}
   {{- end }}
   serviceAccountName: {{ include "jena-fuseki.serviceAccountName" . }}
+  terminationGracePeriodSeconds: 10
   securityContext:
     {{- toYaml .Values.podSecurityContext | nindent 8 }}
   containers:
@@ -39,6 +40,10 @@ spec:
         {{- toYaml .Values.readinessProbe | nindent 12 }}
       resources:
         {{- toYaml .Values.resources | nindent 12 }}
+      lifecycle:
+        preStop:
+          exec:
+            command: ["/bin/sh", "-c", "sleep 5"]
       {{- with .Values.volumeMounts }}
       volumeMounts:
         {{- toYaml . | nindent 12 }}
